@@ -23,6 +23,8 @@ module.exports = function(DataHelpers) {
       return;
     }
 
+  console.log("hello POST");
+
     const user = req.body.user ? req.body.user : userHelper.generateRandomUser();
     const tweet = {
       user: user,

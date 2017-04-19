@@ -1,0 +1,61 @@
+#all-tweets {
+  background-color: #FAEBD7;
+  border-radius: 5px;
+  padding: 10px;
+  margin-top: 20px;
+}
+
+#all-tweets .tweet {
+  border-style: groove;
+  border-color: #C0C0C0;
+  border-radius: 5px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+
+#all-tweets .tweet header {
+  background-color: #D3D3D3;
+  text-decoration: underline;
+  padding: 5px;
+}
+#all-tweets .tweet header h1 {
+  display: inline-block;
+  line-height: 2;
+}
+
+#all-tweets .tweet header h1 {
+  display: inline-block;
+}
+#all-tweets .tweet header h3 {
+  display: inline-block;
+  float: right;
+}
+
+#all-tweets .tweet:hover {
+  border-color: #808080;
+}
+
+#all-tweets .tweet p {
+  padding: 10px 5px;
+}
+
+#all-tweets .tweet footer {
+  background-color: #D3D2D2;
+  padding: 5px;
+}
+
+#all-tweets .tweet footer h3{
+  display: inline-block;
+}
+
+#all-tweets .tweet footer h4 {
+  visibility: visible;
+  float: right;
+  padding: 5px;
+}
+/*#all-tweets .tweet footer h4:hover {
+  visibility: visible;
+  float: right;
+  padding: 5px;
+}*/

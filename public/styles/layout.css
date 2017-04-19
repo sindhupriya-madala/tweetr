@@ -15,11 +15,24 @@ html {
  */
 
 body {
-  margin: 0;
-  color: #244751;
   background-color: #eee;
+  color: #244751;
+  font-family: 'Roboto Condensed', sans-serif;
+  margin: 0;
+  padding: 0;
+  padding-top: 140px;
+  text-align: center;
 }
 
 /*
  * Additional CSS can be defined below or in other CSS files, as per instructions
  */
+
+ .container {
+  background-color: white;
+  margin : 0 auto;
+  padding: 2em;
+  text-align: left;
+  vertical-align: middle;
+  width: 450px;
+}
