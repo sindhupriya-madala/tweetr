@@ -30,33 +30,21 @@
     <nav id="nav-bar">
       <img class="logo" src="/images/bird.png" >
       <span class="header">Tweeter</span>
+      <button class="compose">Compose</button>
     </nav>
 
     <!-- Page-specific (main) content here -->
     <main class="container">
       <section class="new-tweet">
         <h2>Compose Tweet</h2>
-        <form action="/tweets" method="POST">
+        <form id="submit" action="/tweets" method="POST">
           <textarea name="text" placeholder="What are you humming about?"></textarea>
           <input type="submit" value="Tweet">
           <span class="counter">140</span>
         </form>
       </section>
       <section class="container-tweets" id="all-tweets">
-        <!--<article class="tweet">
-          <header>
-            <img src="/images/bird.png">
-            <h1>Bill Field </h1>
-            <h3>@MrFields</h3>
-          </header>
-          <p>Little tweets here</p>
-          <footer>
-            <h3> 10 Days ago </h3>
-            <h4 class="fa fa-flag" visibility="hidden"></h4>
-            <h4 class="fa fa-retweet" aria-hidden="true"></h4>
-            <h4 class="fa fa-heart" aria-hidden="true"></h4>
-          </footer>
-        </article> -->
+
       </section>
     </main>
   </body>

@@ -5,53 +5,6 @@
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
 
- var data = [
-  {
-    "user": {
-      "name": "Newton",
-      "avatars": {
-        "small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-        "regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-        "large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-      },
-      "handle": "@SirIsaac"
-    },
-    "content": {
-      "text": "If I have seen further it is by standing on the shoulders of giants"
-    },
-    "created_at": 1461116232227
-  },
-  {
-    "user": {
-      "name": "Descartes",
-      "avatars": {
-        "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-        "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-        "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-      },
-      "handle": "@rd" },
-    "content": {
-      "text": "<script>alert('uh oh!');</script>"
-    },
-    "created_at": 1461113959088
-  },
-  {
-    "user": {
-      "name": "Johann von Goethe",
-      "avatars": {
-        "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-        "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-        "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-      },
-      "handle": "@johann49"
-    },
-    "content": {
-      "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-    },
-    "created_at": 1461113796368
-  }
-];
-
 function renderTweets(tweets) {
   var $tweets_container = $("#all-tweets");
   for(var tweet in tweets) {
@@ -79,6 +32,78 @@ function createTweetElement(tweet) {
   return $tweet;
 }
 
+$(document).ready(function() {
+    $(function() {
+      //get the form.
+      $form = $('#submit');
+      //get the session of article.
+      $tweets = $('.container-tweets');
+      const $textarea = $('*[name=text]', $form);
+
+      // Set up an event listener for the contact form.
+      $form.submit( function(event) {
+        // Stop the browser from submitting the form.
+
+        console.log("before event propagation",event);
+        event.preventDefault();
+
+        var formData = $form.serialize();
+        console.log("serialize data : ",formData,formData.slice(5));
+        var text = formData.slice(5);
+        if(text === '' || text === null) {
+          console.log("your tweet message is empty");
+        } else if(text.length > 140) {
+          console.log("your tweet message exceeds length, should be below 140");
+        } else {
+          // Submit the form using AJAX.
+          $.ajax({
+              type: 'POST',
+              url: '/tweets',
+              data: formData,
+              success: function() {
+                loadTweets();
+              }
+          })
+          $textarea.val("");
+        }
+      });
+    });
+    function loadTweets() {
+      $.ajax({
+        url: '/tweets',
+        method: 'GET',
+        success: function (tweetsArray) {
+          //console.log('Success POST : ', tweetsArray);
+          renderTweets(tweetsArray);
+        }
+      });
+    }
+    loadTweets();
+
+    $compose = $('.compose');
+    $newTweet = $('.new-tweet');
+    $compose.on('click', function() {
+      $newTweet.slideToggle(1000, function() {
+        switch($newTweet.css('display')) {
+          case 'block':
+            $('.new-tweet textarea').focus();
+            // add button class
+            $('.compose').css("cssText","'color' : 'red;'");
+            break;
+          case 'none':
+            // remove button class
+            //$compose.'blue');
+          break;
+        }
+
+
+      });
+    });
+});
+
+
+
+
 
  //old function but still works.
 /*function createTweetElement(tweet) {
@@ -103,6 +128,4 @@ function createTweetElement(tweet) {
   return $tweet;
 }*/
 
-$(document).ready(function() {
-    console.log(renderTweets(data));
-});
+

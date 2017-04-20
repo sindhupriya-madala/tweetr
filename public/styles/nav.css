@@ -20,5 +20,18 @@
   font-size: 40px;
   float: left;
   line-height: 2;
+}
 
+#nav-bar .compose {
+  border-color: black;
+  border-radius: 5px;
+  float: right;
+  line-height: 2;
+  margin-top: 20px;
+}
+
+#nav-bar .compose:hover {
+  border-color: brown;
+  border-radius: 5px;
+  background-color: olive;
 }
