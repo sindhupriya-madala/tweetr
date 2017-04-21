@@ -22,6 +22,9 @@ module.exports = function(DataHelpers) {
       res.status(400).json({ error: 'invalid request: no data in POST body'});
       return;
     }
+    if(req.body.text.length > 140) {
+      res.status(400).json({error: 'invalid request: data exceeds size - max size is 140 characters'});
+    }
 
   console.log("hello POST");
 

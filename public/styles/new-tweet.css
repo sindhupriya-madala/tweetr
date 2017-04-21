@@ -12,6 +12,9 @@
   float: right;
 }
 
+.container .new-tweet .err-message {
+  color: red;
+}
 .container .new-tweet {
   padding: 10px;
   background-color: #D3D3D3;

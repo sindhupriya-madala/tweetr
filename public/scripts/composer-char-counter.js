@@ -4,10 +4,6 @@ $(document).ready( function() {
     var count = value.length;
     var counter = $(this).closest('.new-tweet').find('.counter');
     counter.text(140-count);
-    if(count > 140) {
-        counter.css({color : "red"});
-    } else {
-        counter.css({color : "black"});
-    }
+    counter.css('color', (count > 140) ? "red" : "black");
   });
 });

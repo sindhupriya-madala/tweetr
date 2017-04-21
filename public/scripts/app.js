@@ -4,6 +4,7 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
+ //"use strict";
 
 function renderTweets(tweets) {
   var $tweets_container = $("#all-tweets");
@@ -11,11 +12,11 @@ function renderTweets(tweets) {
     var $tweet_article = createTweetElement(tweets[tweet]);
     $tweets_container.append($tweet_article);
   }
-  return $tweets_container;
+  //return $tweets_container;
 }
 
 function createTweetElement(tweet) {
-  $tweet = $('<article>', {'class' : 'tweet'}).append(
+  return $('<article>', {'class' : 'tweet'}).append(
     $('<header>').append(
       $('<img>').attr('src', tweet.user.avatars.small),
       $('<h1>').text(tweet.user.name),
@@ -24,50 +25,52 @@ function createTweetElement(tweet) {
     $('<p>').text(tweet.content.text),
     $('<footer>').append(
       $('<h3>').text(tweet.created_at),
-      $('<h4>', { 'class' : "fa fa-flag"}),
-      $('<h4>', { 'class' : "fa fa-retweet"}),
-      $('<h4>', { 'class' : "fa fa-heart"})
+      ['flag', 'retweet', 'heart'].map(icon => $('<h4>', { 'class' : "fa fa-" + icon}))
       )
     )
-  return $tweet;
 }
 
 $(document).ready(function() {
     $(function() {
       //get the form.
-      $form = $('#submit');
+     const $form = $('#submit');
       //get the session of article.
-      $tweets = $('.container-tweets');
+      const $tweets = $('.container-tweets');
       const $textarea = $('*[name=text]', $form);
+      let $errSpan = $('.err-message');
 
       // Set up an event listener for the contact form.
       $form.submit( function(event) {
         // Stop the browser from submitting the form.
-
-        console.log("before event propagation",event);
         event.preventDefault();
-
-        var formData = $form.serialize();
-        console.log("serialize data : ",formData,formData.slice(5));
-        var text = formData.slice(5);
+        // if tweent is empty or more than 140 just display span with proper msg for 1500ms time.
+        var text = $textarea.val();
         if(text === '' || text === null) {
-          console.log("your tweet message is empty");
+          $errSpan.text("Tweet should not be Empty");
+          setTimeout(() => {
+            $errSpan.text("");
+          },1500);
         } else if(text.length > 140) {
-          console.log("your tweet message exceeds length, should be below 140");
+          $errSpan.text("Tweet length more than 140 characters");
+          setTimeout(() => {
+            $errSpan.text("");
+          },1500);
         } else {
           // Submit the form using AJAX.
           $.ajax({
               type: 'POST',
               url: '/tweets',
-              data: formData,
+              data: $form.serialize(),
               success: function() {
                 loadTweets();
               }
           })
+          //empty the tweet textarea after tweet submits the post.
           $textarea.val("");
         }
       });
     });
+    //function for load all tweets.
     function loadTweets() {
       $.ajax({
         url: '/tweets',
@@ -80,23 +83,25 @@ $(document).ready(function() {
     }
     loadTweets();
 
-    $compose = $('.compose');
-    $newTweet = $('.new-tweet');
+    //when we click compose button it slideDown newtweet and with the return value of slideToggle
+    // we are changing the compose button appearance.
+    const $compose = $('.compose');
+    const $newTweet = $('.new-tweet');
     $compose.on('click', function() {
       $newTweet.slideToggle(1000, function() {
-        switch($newTweet.css('display')) {
-          case 'block':
-            $('.new-tweet textarea').focus();
-            // add button class
-            $('.compose').css("cssText","'color' : 'red;'");
-            break;
-          case 'none':
-            // remove button class
-            //$compose.'blue');
-          break;
+        var style = {
+          'block': {
+            'color': 'red',
+            'text-decoration': 'underline'
+          },
+          'none': {
+            'color': 'blue',
+            'text-decoration': 'none'
+          }
         }
 
-
+        $('.new-tweet textarea').focus();
+        $('.compose').css(style[$newTweet.css('display')]);
       });
     });
 });

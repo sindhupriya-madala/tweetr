@@ -16,15 +16,12 @@
 
 #all-tweets .tweet header {
   background-color: #D3D3D3;
-  text-decoration: underline;
   padding: 5px;
 }
 #all-tweets .tweet header h1 {
-  display: inline-block;
-}
-
-#all-tweets .tweet header h1 {
-  display: inline-block;
+  display: inline;
+  vertical-align: top;
+  margin-left: 10px;
 }
 #all-tweets .tweet header h3 {
   display: inline-block;
@@ -37,6 +34,7 @@
 
 #all-tweets .tweet p {
   padding: 10px 5px;
+  word-wrap: break-word;
 }
 
 #all-tweets .tweet footer {
